@@ -255,7 +255,13 @@ public class crud : MonoBehaviour
 
     public void UploadImage()
     {
-        string path = EditorUtility.OpenFilePanel("Upload Profile Image", "", "png");
+        string path = EditorUtility.OpenFilePanel("Upload Profile Image", "","*");
+        List<string> supportedTypes = new List<string>() { ".jpg", ".png", ".bmp" };
+        while(! supportedTypes.Contains( Path.GetExtension( path)))
+        {
+            path = EditorUtility.OpenFilePanel("Upload Profile Image", "", "*");
+        }
+
         if (path.Length != 0)
         {
             form_create.transform.GetChild(6).GetComponent<InputField>().text = path.ToString();
