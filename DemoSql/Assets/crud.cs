@@ -35,8 +35,6 @@ public class crud : MonoBehaviour
     IEnumerator GetUsers()
     {
 
-
-
         UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:52324/User/GetUsers", "GET");
         //unityWebRequest.uploadHandler = new UploadHandlerRaw(byteData);
         unityWebRequest.SetRequestHeader("Content-Type", "application/json");
@@ -88,6 +86,7 @@ public class crud : MonoBehaviour
         unityWebRequest.SetRequestHeader("Accept", "text/csv");
         DownloadHandlerBuffer downloadHandlerBuffer = new DownloadHandlerBuffer();
         unityWebRequest.downloadHandler = downloadHandlerBuffer;
+     
         yield return unityWebRequest.SendWebRequest();
 
         if (unityWebRequest.isNetworkError || unityWebRequest.isHttpError)
@@ -96,6 +95,8 @@ public class crud : MonoBehaviour
         }
         else
         {
+            imageData = null;
+
             Debug.Log("GetUsers API Success : Status Code: " + unityWebRequest.responseCode);
 
             string responsejson = unityWebRequest.downloadHandler.text;
@@ -165,30 +166,36 @@ public class crud : MonoBehaviour
             string age = SceneUsers.users[i].id.ToString();
             if (id != "")
             {
+                Texture2D tex = new Texture2D(300, 300);
+                tex.LoadImage(Convert.FromBase64String(SceneUsers.users[i].profileimage));
                 GameObject tmp_Item = Instantiate(item, itemParent.transform);
                 tmp_Item.name = SceneUsers.users[i].id.ToString();
                 tmp_Item.transform.GetChild(0).GetComponent<Text>().text = SceneUsers.users[i].id.ToString();
                 tmp_Item.transform.GetChild(1).GetComponent<Text>().text = SceneUsers.users[i].name.ToString();
                 tmp_Item.transform.GetChild(2).GetComponent<Text>().text = SceneUsers.users[i].age.ToString();
+                tmp_Item.transform.GetChild(4).GetChild(0).GetComponent<RawImage>().texture = tex;
+
             }
             else
                 number--;
         }
     }
-
+    
     public void Create()
     {
         User newUser = new User()
         {
             id = Guid.NewGuid(),
             name = form_create.transform.GetChild(1).GetComponent<InputField>().text,
-            age = form_create.transform.GetChild(2).GetComponent<InputField>().text
+            age = form_create.transform.GetChild(2).GetComponent<InputField>().text,
+            dob = DateTime.Parse(form_create.transform.GetChild(3).GetComponent<InputField>().text).ToShortDateString(),
+            ethnicity = form_create.transform.GetChild(4).GetComponent<InputField>().text,
+            gender = form_create.transform.GetChild(5).GetComponent<InputField>().text
+            ,            profileimage = Convert.ToBase64String(imageData)
         };
         //call api for user creation 
 
         StartCoroutine(AddUser(newUser));
-
-
 
     }
 
@@ -248,10 +255,12 @@ public class crud : MonoBehaviour
 
     public void UploadImage()
     {
-        string path = EditorUtility.OpenFilePanel("Overwrite with png", "", "png");
+        string path = EditorUtility.OpenFilePanel("Upload Profile Image", "", "png");
         if (path.Length != 0)
         {
+            form_create.transform.GetChild(6).GetComponent<InputField>().text = path.ToString();
             var fileContent = File.ReadAllBytes(path);
+            imageData = fileContent;
             //  texture.LoadImage(fileContent);
         }
 

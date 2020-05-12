@@ -15,6 +15,18 @@ public class User
     [DataMember]
 
     public string age;
+
+    [DataMember]
+    public string dob;
+
+    [DataMember]
+    public string ethnicity;
+
+    [DataMember]
+    public string gender;
+
+    [DataMember]
+    public string profileimage;
 }
 [Serializable]
 public class GetResponseModel
