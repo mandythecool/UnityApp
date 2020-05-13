@@ -66,6 +66,7 @@
     <Compile Include="Assets\crud.cs" />
     <Compile Include="Assets\LoginClick.cs" />
     <Compile Include="Assets\LoginSelector.cs" />
+    <Compile Include="Assets\NewPatient.cs" />
     <Compile Include="Assets\RequestModel.cs" />
     <Compile Include="Assets\SceneChanger.cs" />
     <Compile Include="Assets\User.cs" />

@@ -13,6 +13,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Net.Http;
 using UnityEngine.SceneManagement;
 using UnityEditor;
+using System.Drawing;
 
 public class crud : MonoBehaviour
 {
@@ -166,7 +167,26 @@ public class crud : MonoBehaviour
             string age = SceneUsers.users[i].id.ToString();
             if (id != "")
             {
-                Texture2D tex = new Texture2D(300, 300);
+                using (var ms = new MemoryStream(Convert.FromBase64String(SceneUsers.users[i].profileimage)))
+                {
+                    
+                    //System.Drawing.Rectangle img = Image.FromStream(ms);
+                    //return new Tuple<int, int>(img.Width, img.Height); // or some other data container
+                }
+                //byte[] im = Convert.FromBase64String(SceneUsers.users[i].profileimage);
+                //string path = @"C:\Users\mandy\Desktop\tempimage.bmp";
+                //File.WriteAllBytes(path, im);
+
+                //FileInfo file = new FileInfo(path);
+                //var sizeInBytes = file.Length;
+
+                //Bitmap img = new Bitmap(open.FileName);
+
+                //var imageHeight = img.Height;
+                //var imageWidth = img.Width;
+
+                Texture2D tex = new Texture2D(1,1);
+
                 tex.LoadImage(Convert.FromBase64String(SceneUsers.users[i].profileimage));
                 GameObject tmp_Item = Instantiate(item, itemParent.transform);
                 tmp_Item.name = SceneUsers.users[i].id.ToString();
@@ -174,7 +194,8 @@ public class crud : MonoBehaviour
                 tmp_Item.transform.GetChild(1).GetComponent<Text>().text = SceneUsers.users[i].name.ToString();
                 tmp_Item.transform.GetChild(2).GetComponent<Text>().text = SceneUsers.users[i].age.ToString();
                 tmp_Item.transform.GetChild(4).GetChild(0).GetComponent<RawImage>().texture = tex;
-
+                //tmp_Item.transform.GetChild(4).GetChild(0).GetComponent<RawImage>().GetComponent<RectTransform>().sizeDelta = new Vector2(2000, 2000);
+                //tmp_Item.transform.GetChild(4).GetChild(0).GetComponent<RawImage>().uvRect = new Rect(161, 30, 100, 100);
             }
             else
                 number--;
