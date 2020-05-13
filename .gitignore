@@ -1,3 +1,5 @@
 
 *.backup
 DemoSql/Temp/
+DemoSql/.vs/
+DemoSql/Obj/
