@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 public class NewPatient : MonoBehaviour
 {
-    public GameObject form_create;
+    public GameObject form_create,form_confirm;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,8 +55,8 @@ public class NewPatient : MonoBehaviour
             Debug.Log("GetUsers API Success : Status Code: " + unityWebRequest.responseCode);
 
             string responsejson = unityWebRequest.downloadHandler.text;
-
-            SceneManager.LoadScene("DashboardScene");
+            form_confirm.SetActive(true);
+//            SceneManager.LoadScene("DashboardScene");
 
         }
 

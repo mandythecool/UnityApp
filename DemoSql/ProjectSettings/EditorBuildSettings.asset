@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/HomeScene.unity
     guid: 09917fe6485579347b314969e307694a
   - enabled: 1
+    path: Assets/Scenes/NewPatientScene.unity
+    guid: 725271a7a639c764eade516be8e8c817
+  - enabled: 1
     path: Assets/Scenes/DashboardScene.unity
     guid: cf0e2aadafc3289458eebfa86255cf62
   - enabled: 0
