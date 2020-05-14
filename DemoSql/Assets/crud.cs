@@ -17,7 +17,7 @@ using System.Drawing;
 
 public class crud : MonoBehaviour
 {
-    public GameObject itemParent, item, form_create, form_edit;
+    public GameObject itemParent, itemGreen, itemOrange, form_edit;
     public Users SceneUsers { get; set; }
     // Start is called before the first frame update
     void Start()
@@ -67,48 +67,48 @@ public class crud : MonoBehaviour
 
     }
 
-    IEnumerator AddUser(User user)
-    {
-        DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(User));
-        MemoryStream msObj = new MemoryStream();
-        js.WriteObject(msObj, user);
-        msObj.Position = 0;
-        StreamReader sr = new StreamReader(msObj);
+    //IEnumerator AddUser(User user)
+    //{
+    //    DataContractJsonSerializer js = new DataContractJsonSerializer(typeof(User));
+    //    MemoryStream msObj = new MemoryStream();
+    //    js.WriteObject(msObj, user);
+    //    msObj.Position = 0;
+    //    StreamReader sr = new StreamReader(msObj);
 
-        // "{\"Description\":\"Share Knowledge\",\"Name\":\"C-sharpcorner\"}"  
-        string json = sr.ReadToEnd();
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
+    //    // "{\"Description\":\"Share Knowledge\",\"Name\":\"C-sharpcorner\"}"  
+    //    string json = sr.ReadToEnd();
+    //    byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
 
 
 
-        UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:52324/User/AddUser", "POST");
-        unityWebRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
-        unityWebRequest.SetRequestHeader("Content-Type", "application/json");
-        unityWebRequest.SetRequestHeader("Accept", "text/csv");
-        DownloadHandlerBuffer downloadHandlerBuffer = new DownloadHandlerBuffer();
-        unityWebRequest.downloadHandler = downloadHandlerBuffer;
+    //    UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:52324/User/AddUser", "POST");
+    //    unityWebRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
+    //    unityWebRequest.SetRequestHeader("Content-Type", "application/json");
+    //    unityWebRequest.SetRequestHeader("Accept", "text/csv");
+    //    DownloadHandlerBuffer downloadHandlerBuffer = new DownloadHandlerBuffer();
+    //    unityWebRequest.downloadHandler = downloadHandlerBuffer;
      
-        yield return unityWebRequest.SendWebRequest();
+    //    yield return unityWebRequest.SendWebRequest();
 
-        if (unityWebRequest.isNetworkError || unityWebRequest.isHttpError)
-        {
-            Debug.Log(unityWebRequest.error);
-        }
-        else
-        {
-            imageData = null;
+    //    if (unityWebRequest.isNetworkError || unityWebRequest.isHttpError)
+    //    {
+    //        Debug.Log(unityWebRequest.error);
+    //    }
+    //    else
+    //    {
+    //        imageData = null;
 
-            Debug.Log("GetUsers API Success : Status Code: " + unityWebRequest.responseCode);
+    //        Debug.Log("GetUsers API Success : Status Code: " + unityWebRequest.responseCode);
 
-            string responsejson = unityWebRequest.downloadHandler.text;
+    //        string responsejson = unityWebRequest.downloadHandler.text;
 
-            form_create.transform.GetChild(1).GetComponent<InputField>().text = "";
-            form_create.transform.GetChild(2).GetComponent<InputField>().text = "";
+    //        form_create.transform.GetChild(1).GetComponent<InputField>().text = "";
+    //        form_create.transform.GetChild(2).GetComponent<InputField>().text = "";
 
-            ReadUsers();
-        }
+    //        ReadUsers();
+    //    }
 
-    }
+    //}
 
     IEnumerator UpdateUser(User user)
     {
@@ -142,8 +142,8 @@ public class crud : MonoBehaviour
 
             string responsejson = unityWebRequest.downloadHandler.text;
 
-            form_create.transform.GetChild(1).GetComponent<InputField>().text = "";
-            form_create.transform.GetChild(2).GetComponent<InputField>().text = "";
+       //     form_create.transform.GetChild(1).GetComponent<InputField>().text = "";
+       //     form_create.transform.GetChild(2).GetComponent<InputField>().text = "";
 
             ReadUsers();
         }
@@ -167,58 +167,62 @@ public class crud : MonoBehaviour
             string age = SceneUsers.users[i].id.ToString();
             if (id != "")
             {
-                using (var ms = new MemoryStream(Convert.FromBase64String(SceneUsers.users[i].profileimage)))
+
+                if (int.Parse(SceneUsers.users[i].age) > 18)
                 {
-                    
-                    //System.Drawing.Rectangle img = Image.FromStream(ms);
-                    //return new Tuple<int, int>(img.Width, img.Height); // or some other data container
+                    Texture2D tex = new Texture2D(1, 1);
+
+                    tex.LoadImage(Convert.FromBase64String(SceneUsers.users[i].profileimage));
+                    GameObject tmp_Item = Instantiate(itemGreen, itemParent.transform);
+                    tmp_Item.name = SceneUsers.users[i].id.ToString();
+                    tmp_Item.transform.GetChild(2).GetComponent<Text>().text = SceneUsers.users[i].id.ToString();
+                    tmp_Item.transform.GetChild(3).GetComponent<Text>().text = SceneUsers.users[i].name.ToString();
+                    tmp_Item.transform.GetChild(5).GetComponent<Text>().text = SceneUsers.users[i].gender.ToString();
+                    tmp_Item.transform.GetChild(7).GetComponent<Text>().text = SceneUsers.users[i].dob.ToString();
+                    tmp_Item.transform.GetChild(9).GetComponent<Text>().text = SceneUsers.users[i].ethnicity.ToString();
+
+                    tmp_Item.transform.GetChild(11).GetChild(0).GetComponent<RawImage>().texture = tex;
                 }
-                //byte[] im = Convert.FromBase64String(SceneUsers.users[i].profileimage);
-                //string path = @"C:\Users\mandy\Desktop\tempimage.bmp";
-                //File.WriteAllBytes(path, im);
+                else
+                {
+                    Texture2D tex = new Texture2D(1, 1);
 
-                //FileInfo file = new FileInfo(path);
-                //var sizeInBytes = file.Length;
+                    tex.LoadImage(Convert.FromBase64String(SceneUsers.users[i].profileimage));
+                    GameObject tmp_Item = Instantiate(itemOrange, itemParent.transform);
+                    tmp_Item.name = SceneUsers.users[i].id.ToString();
+                    tmp_Item.transform.GetChild(2).GetComponent<Text>().text = SceneUsers.users[i].id.ToString();
+                    tmp_Item.transform.GetChild(3).GetComponent<Text>().text = SceneUsers.users[i].name.ToString();
+                    tmp_Item.transform.GetChild(5).GetComponent<Text>().text = SceneUsers.users[i].gender.ToString();
+                    tmp_Item.transform.GetChild(7).GetComponent<Text>().text = SceneUsers.users[i].dob.ToString();
+                    tmp_Item.transform.GetChild(9).GetComponent<Text>().text = SceneUsers.users[i].ethnicity.ToString();
 
-                //Bitmap img = new Bitmap(open.FileName);
-
-                //var imageHeight = img.Height;
-                //var imageWidth = img.Width;
-
-                Texture2D tex = new Texture2D(1,1);
-
-                tex.LoadImage(Convert.FromBase64String(SceneUsers.users[i].profileimage));
-                GameObject tmp_Item = Instantiate(item, itemParent.transform);
-                tmp_Item.name = SceneUsers.users[i].id.ToString();
-                tmp_Item.transform.GetChild(0).GetComponent<Text>().text = SceneUsers.users[i].id.ToString();
-                tmp_Item.transform.GetChild(1).GetComponent<Text>().text = SceneUsers.users[i].name.ToString();
-                tmp_Item.transform.GetChild(2).GetComponent<Text>().text = SceneUsers.users[i].age.ToString();
-                tmp_Item.transform.GetChild(4).GetChild(0).GetComponent<RawImage>().texture = tex;
-                //tmp_Item.transform.GetChild(4).GetChild(0).GetComponent<RawImage>().GetComponent<RectTransform>().sizeDelta = new Vector2(2000, 2000);
-                //tmp_Item.transform.GetChild(4).GetChild(0).GetComponent<RawImage>().uvRect = new Rect(161, 30, 100, 100);
+                    tmp_Item.transform.GetChild(11).GetChild(0).GetComponent<RawImage>().texture = tex;
+                    //tmp_Item.transform.GetChild(4).GetChild(0).GetComponent<RawImage>().GetComponent<RectTransform>().sizeDelta = new Vector2(2000, 2000);
+                    //tmp_Item.transform.GetChild(4).GetChild(0).GetComponent<RawImage>().uvRect = new Rect(161, 30, 100, 100);
+                }
             }
             else
                 number--;
         }
     }
     
-    public void Create()
-    {
-        User newUser = new User()
-        {
-            id = Guid.NewGuid(),
-            name = form_create.transform.GetChild(1).GetComponent<InputField>().text,
-            age = form_create.transform.GetChild(2).GetComponent<InputField>().text,
-            dob = DateTime.Parse(form_create.transform.GetChild(3).GetComponent<InputField>().text).ToShortDateString(),
-            ethnicity = form_create.transform.GetChild(4).GetComponent<InputField>().text,
-            gender = form_create.transform.GetChild(5).GetComponent<InputField>().text
-            ,            profileimage = Convert.ToBase64String(imageData)
-        };
-        //call api for user creation 
+    //public void Create()
+    //{
+    //    User newUser = new User()
+    //    {
+    //        id = Guid.NewGuid(),
+    //        name = form_create.transform.GetChild(1).GetComponent<InputField>().text,
+    //        age = form_create.transform.GetChild(2).GetComponent<InputField>().text,
+    //        dob = DateTime.Parse(form_create.transform.GetChild(3).GetComponent<InputField>().text).ToShortDateString(),
+    //        ethnicity = form_create.transform.GetChild(4).GetComponent<InputField>().text,
+    //        gender = form_create.transform.GetChild(5).GetComponent<InputField>().text
+    //        ,            profileimage = Convert.ToBase64String(imageData)
+    //    };
+    //    //call api for user creation 
 
-        StartCoroutine(AddUser(newUser));
+    //    StartCoroutine(AddUser(newUser));
 
-    }
+    //}
 
     public void Delete(GameObject item)
     {
@@ -274,24 +278,24 @@ public class crud : MonoBehaviour
         SceneManager.LoadScene("LoginScene");
     }
 
-    public void UploadImage()
-    {
-        string path = EditorUtility.OpenFilePanel("Upload Profile Image", "","*");
-        List<string> supportedTypes = new List<string>() { ".jpg", ".png", ".bmp" };
-        while(! supportedTypes.Contains( Path.GetExtension( path)))
-        {
-            path = EditorUtility.OpenFilePanel("Upload Profile Image", "", "*");
-        }
+    //public void UploadImage()
+    //{
+    //    string path = EditorUtility.OpenFilePanel("Upload Profile Image", "","*");
+    //    List<string> supportedTypes = new List<string>() { ".jpg", ".png", ".bmp" };
+    //    while(! supportedTypes.Contains( Path.GetExtension( path)))
+    //    {
+    //        path = EditorUtility.OpenFilePanel("Upload Profile Image", "", "*");
+    //    }
 
-        if (path.Length != 0)
-        {
-            form_create.transform.GetChild(6).GetComponent<InputField>().text = path.ToString();
-            var fileContent = File.ReadAllBytes(path);
-            imageData = fileContent;
-            //  texture.LoadImage(fileContent);
-        }
+    //    if (path.Length != 0)
+    //    {
+    //        form_create.transform.GetChild(6).GetComponent<InputField>().text = path.ToString();
+    //        var fileContent = File.ReadAllBytes(path);
+    //        imageData = fileContent;
+    //        //  texture.LoadImage(fileContent);
+    //    }
 
-    }
+    //}
     public byte[] imageData { get; set; }
 
 }
