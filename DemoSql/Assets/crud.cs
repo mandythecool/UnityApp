@@ -87,7 +87,7 @@ public class crud : MonoBehaviour
     //    unityWebRequest.SetRequestHeader("Accept", "text/csv");
     //    DownloadHandlerBuffer downloadHandlerBuffer = new DownloadHandlerBuffer();
     //    unityWebRequest.downloadHandler = downloadHandlerBuffer;
-     
+
     //    yield return unityWebRequest.SendWebRequest();
 
     //    if (unityWebRequest.isNetworkError || unityWebRequest.isHttpError)
@@ -142,8 +142,8 @@ public class crud : MonoBehaviour
 
             string responsejson = unityWebRequest.downloadHandler.text;
 
-       //     form_create.transform.GetChild(1).GetComponent<InputField>().text = "";
-       //     form_create.transform.GetChild(2).GetComponent<InputField>().text = "";
+            //     form_create.transform.GetChild(1).GetComponent<InputField>().text = "";
+            //     form_create.transform.GetChild(2).GetComponent<InputField>().text = "";
 
             ReadUsers();
         }
@@ -178,10 +178,10 @@ public class crud : MonoBehaviour
                     tmp_Item.transform.GetChild(2).GetComponent<Text>().text = SceneUsers.users[i].id.ToString();
                     tmp_Item.transform.GetChild(3).GetComponent<Text>().text = SceneUsers.users[i].name.ToString();
                     tmp_Item.transform.GetChild(5).GetComponent<Text>().text = SceneUsers.users[i].gender.ToString();
-                    tmp_Item.transform.GetChild(7).GetComponent<Text>().text = SceneUsers.users[i].dob.ToString();
+                    tmp_Item.transform.GetChild(7).GetComponent<Text>().text = DateTime.Parse(SceneUsers.users[i].dob).ToShortDateString();
                     tmp_Item.transform.GetChild(9).GetComponent<Text>().text = SceneUsers.users[i].ethnicity.ToString();
 
-                    tmp_Item.transform.GetChild(11).GetChild(0).GetComponent<RawImage>().texture = tex;
+                    tmp_Item.transform.GetChild(10).GetChild(0).GetComponent<RawImage>().texture = tex;
                 }
                 else
                 {
@@ -193,10 +193,10 @@ public class crud : MonoBehaviour
                     tmp_Item.transform.GetChild(2).GetComponent<Text>().text = SceneUsers.users[i].id.ToString();
                     tmp_Item.transform.GetChild(3).GetComponent<Text>().text = SceneUsers.users[i].name.ToString();
                     tmp_Item.transform.GetChild(5).GetComponent<Text>().text = SceneUsers.users[i].gender.ToString();
-                    tmp_Item.transform.GetChild(7).GetComponent<Text>().text = SceneUsers.users[i].dob.ToString();
+                    tmp_Item.transform.GetChild(7).GetComponent<Text>().text = DateTime.Parse(SceneUsers.users[i].dob).ToShortDateString();
                     tmp_Item.transform.GetChild(9).GetComponent<Text>().text = SceneUsers.users[i].ethnicity.ToString();
 
-                    tmp_Item.transform.GetChild(11).GetChild(0).GetComponent<RawImage>().texture = tex;
+                    tmp_Item.transform.GetChild(10).GetChild(0).GetComponent<RawImage>().texture = tex;
                     //tmp_Item.transform.GetChild(4).GetChild(0).GetComponent<RawImage>().GetComponent<RectTransform>().sizeDelta = new Vector2(2000, 2000);
                     //tmp_Item.transform.GetChild(4).GetChild(0).GetComponent<RawImage>().uvRect = new Rect(161, 30, 100, 100);
                 }
@@ -205,7 +205,7 @@ public class crud : MonoBehaviour
                 number--;
         }
     }
-    
+
     //public void Create()
     //{
     //    User newUser = new User()
@@ -235,10 +235,10 @@ public class crud : MonoBehaviour
 
     string id_edit;
 
-    public void open_edit_form(GameObject obj_edit)
+    public void open_update_form(GameObject obj_edit)
     {
         form_edit.SetActive(true);
-
+        imageData = null;
         User user = null;
         foreach (User u in SceneUsers.users)
         {
@@ -248,18 +248,41 @@ public class crud : MonoBehaviour
                 break;
             }
         }
-        form_edit.transform.GetChild(1).GetComponent<Text>().text = obj_edit.name;
-        form_edit.transform.GetChild(2).GetComponent<InputField>().text = user.name;
-        form_edit.transform.GetChild(3).GetComponent<InputField>().text = user.age;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<InputField>().text = user.name;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<InputField>().text = user.age;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<InputField>().text = user.dob;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<InputField>().text = user.ethnicity;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(4).GetComponent<InputField>().text = user.gender;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(5).GetComponent<InputField>().text = string.Empty;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(8).GetComponent<Text>().text = user.id.ToString();
+
+    }
+
+    public void resetFields()
+    {
+        imageData = null;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<InputField>().text = string.Empty;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<InputField>().text = string.Empty;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<InputField>().text = string.Empty;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<InputField>().text = string.Empty;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(4).GetComponent<InputField>().text = string.Empty;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(5).GetComponent<InputField>().text = string.Empty;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(8).GetComponent<Text>().text = string.Empty;
+        form_edit.SetActive(false);
     }
 
     public void update_user()
     {
+
         User u = new User()
         {
-            id = Guid.Parse(form_edit.transform.GetChild(1).GetComponent<Text>().text),
-            name = form_edit.transform.GetChild(2).GetComponent<InputField>().text,
-            age = form_edit.transform.GetChild(3).GetComponent<InputField>().text
+            id = int.Parse(form_edit.transform.GetChild(0).GetChild(0).GetChild(8).GetComponent<Text>().text),
+            name = form_edit.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<InputField>().text,
+            age = form_edit.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<InputField>().text,
+            dob = form_edit.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<InputField>().text,
+            ethnicity = form_edit.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<InputField>().text,
+            gender = form_edit.transform.GetChild(0).GetChild(0).GetChild(4).GetComponent<InputField>().text,
+            profileimage = Convert.ToBase64String(imageData)
         };
         StartCoroutine(UpdateUser(u));
 
@@ -278,24 +301,23 @@ public class crud : MonoBehaviour
         SceneManager.LoadScene("LoginScene");
     }
 
-    //public void UploadImage()
-    //{
-    //    string path = EditorUtility.OpenFilePanel("Upload Profile Image", "","*");
-    //    List<string> supportedTypes = new List<string>() { ".jpg", ".png", ".bmp" };
-    //    while(! supportedTypes.Contains( Path.GetExtension( path)))
-    //    {
-    //        path = EditorUtility.OpenFilePanel("Upload Profile Image", "", "*");
-    //    }
+    public void UploadImage()
+    {
+        string path = EditorUtility.OpenFilePanel("Upload Profile Image", "", "*");
+        List<string> supportedTypes = new List<string>() { ".jpg", ".png", ".bmp" };
+        while (!supportedTypes.Contains(Path.GetExtension(path)))
+        {
+            path = EditorUtility.OpenFilePanel("Upload Profile Image", "", "*");
+        }
 
-    //    if (path.Length != 0)
-    //    {
-    //        form_create.transform.GetChild(6).GetComponent<InputField>().text = path.ToString();
-    //        var fileContent = File.ReadAllBytes(path);
-    //        imageData = fileContent;
-    //        //  texture.LoadImage(fileContent);
-    //    }
+        if (path.Length != 0)
+        {
+            form_edit.transform.GetChild(0).GetChild(0).GetChild(5).GetComponent<InputField>().text = path.ToString();
+            var fileContent = File.ReadAllBytes(path);
+            imageData = fileContent;
+        }
 
-    //}
+    }
     public byte[] imageData { get; set; }
 
 }

@@ -8,7 +8,11 @@ using UnityEngine;
 public class User
 {
     [DataMember]
-    public Guid id;
+    public int id;
+
+    //[DataMember]
+    //public int patientid;
+
     [DataMember]
 
     public string name;
