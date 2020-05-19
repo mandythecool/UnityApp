@@ -271,6 +271,13 @@ public class crud : MonoBehaviour
         form_edit.SetActive(false);
     }
 
+    public void OpenVisit(GameObject obj)
+    {
+        SessionObject.SessionPatientID = obj.name;
+        //now navigate the visit scene
+        SceneManager.LoadScene("PatientVisitScene");
+    }
+
     public void update_user()
     {
 

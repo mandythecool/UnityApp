@@ -70,6 +70,7 @@
     <Compile Include="Assets\RequestModel.cs" />
     <Compile Include="Assets\ReturningPatientScript.cs" />
     <Compile Include="Assets\SceneChanger.cs" />
+    <Compile Include="Assets\SessionObject.cs" />
     <Compile Include="Assets\User.cs" />
     <Compile Include="Assets\UserVisitRequest.cs" />
     <Compile Include="Assets\Utilities\SimpleJSON.cs" />

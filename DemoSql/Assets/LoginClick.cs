@@ -21,6 +21,12 @@ public class LoginClick : MonoBehaviour
     public Text messageText;
     RequestModel rq;
 
+    public void Start()
+    {
+        SessionObject.LoggedInUserName = string.Empty;
+        SessionObject.SessionPatientID = string.Empty;
+        SessionObject.user = null;
+    }
     public void logincall()
     {
         rq = new RequestModel();
@@ -75,12 +81,13 @@ public class LoginClick : MonoBehaviour
             string response = unityWebRequest.downloadHandler.text;
             Debug.Log("Form upload complete! Status Code: " + unityWebRequest.responseCode);
             if (response.Contains("true"))
+            {
+                SessionObject.LoggedInUserName = Username.text;
                 SceneManager.LoadScene("HomeScene");
+            }
             else
             {
                 messageText.gameObject.SetActive(true);
-
-
                 Debug.LogWarning("invalid login");
             }
         }

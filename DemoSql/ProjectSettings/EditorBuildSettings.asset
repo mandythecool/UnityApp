@@ -23,7 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DashboardScene.unity
     guid: cf0e2aadafc3289458eebfa86255cf62
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/PatientVisitScene.unity
+    guid: f820a0023ecc40f48aefc5fa5fb93ab8
   m_configObjects: {}
