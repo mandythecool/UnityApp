@@ -58,7 +58,7 @@ public class LoginClick : MonoBehaviour
 
         byte[] byteData = System.Text.Encoding.ASCII.GetBytes(json.ToCharArray());
 
-        UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:52324/Auth", "POST");
+        UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:50471/Auth", "POST");
         unityWebRequest.uploadHandler = new UploadHandlerRaw(byteData);
         unityWebRequest.SetRequestHeader("Content-Type", "application/json");
         DownloadHandlerBuffer downloadHandlerBuffer = new DownloadHandlerBuffer();
@@ -74,7 +74,7 @@ public class LoginClick : MonoBehaviour
             Debug.Log("API Success");
             string response = unityWebRequest.downloadHandler.text;
             Debug.Log("Form upload complete! Status Code: " + unityWebRequest.responseCode);
-            if (response.Equals("true"))
+            if (response.Contains("true"))
                 SceneManager.LoadScene("HomeScene");
             else
             {

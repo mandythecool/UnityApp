@@ -36,7 +36,7 @@ public class crud : MonoBehaviour
     IEnumerator GetUsers()
     {
 
-        UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:52324/User/GetUsers", "GET");
+        UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:50471/Users/GetUsers", "GET");
         //unityWebRequest.uploadHandler = new UploadHandlerRaw(byteData);
         unityWebRequest.SetRequestHeader("Content-Type", "application/json");
         DownloadHandlerBuffer downloadHandlerBuffer = new DownloadHandlerBuffer();
@@ -81,7 +81,7 @@ public class crud : MonoBehaviour
 
 
 
-    //    UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:52324/User/AddUser", "POST");
+    //    UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:50471/Users/AddUser", "POST");
     //    unityWebRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
     //    unityWebRequest.SetRequestHeader("Content-Type", "application/json");
     //    unityWebRequest.SetRequestHeader("Accept", "text/csv");
@@ -124,7 +124,7 @@ public class crud : MonoBehaviour
 
 
 
-        UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:52324/User/UpdateUser", "POST");
+        UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:50471/Users/UpdateUser", "POST");
         unityWebRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
         unityWebRequest.SetRequestHeader("Content-Type", "application/json");
         unityWebRequest.SetRequestHeader("Accept", "text/csv");
@@ -162,24 +162,24 @@ public class crud : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             number++;
-            string id = SceneUsers.users[i].id.ToString();
-            string name = SceneUsers.users[i].id.ToString();
-            string age = SceneUsers.users[i].id.ToString();
+            string id = SceneUsers.users[i].Id.ToString();
+            string name = SceneUsers.users[i].Id.ToString();
+            string age = SceneUsers.users[i].Id.ToString();
             if (id != "")
             {
 
-                if (int.Parse(SceneUsers.users[i].age) > 18)
+                if (int.Parse(SceneUsers.users[i].Age) > 18)
                 {
                     Texture2D tex = new Texture2D(1, 1);
 
-                    tex.LoadImage(Convert.FromBase64String(SceneUsers.users[i].profileimage));
+                    tex.LoadImage(Convert.FromBase64String(SceneUsers.users[i].Profileimage));
                     GameObject tmp_Item = Instantiate(itemGreen, itemParent.transform);
-                    tmp_Item.name = SceneUsers.users[i].id.ToString();
-                    tmp_Item.transform.GetChild(2).GetComponent<Text>().text = SceneUsers.users[i].id.ToString();
-                    tmp_Item.transform.GetChild(3).GetComponent<Text>().text = SceneUsers.users[i].name.ToString();
-                    tmp_Item.transform.GetChild(5).GetComponent<Text>().text = SceneUsers.users[i].gender.ToString();
-                    tmp_Item.transform.GetChild(7).GetComponent<Text>().text = DateTime.Parse(SceneUsers.users[i].dob).ToShortDateString();
-                    tmp_Item.transform.GetChild(9).GetComponent<Text>().text = SceneUsers.users[i].ethnicity.ToString();
+                    tmp_Item.name = SceneUsers.users[i].Id.ToString();
+                    tmp_Item.transform.GetChild(2).GetComponent<Text>().text = SceneUsers.users[i].Id.ToString();
+                    tmp_Item.transform.GetChild(3).GetComponent<Text>().text = SceneUsers.users[i].Name.ToString();
+                    tmp_Item.transform.GetChild(5).GetComponent<Text>().text = SceneUsers.users[i].Gender.ToString();
+                    tmp_Item.transform.GetChild(7).GetComponent<Text>().text = DateTime.Parse(SceneUsers.users[i].Dob).ToShortDateString();
+                    tmp_Item.transform.GetChild(9).GetComponent<Text>().text = SceneUsers.users[i].Ethnicity.ToString();
 
                     tmp_Item.transform.GetChild(10).GetChild(0).GetComponent<RawImage>().texture = tex;
                 }
@@ -187,14 +187,14 @@ public class crud : MonoBehaviour
                 {
                     Texture2D tex = new Texture2D(1, 1);
 
-                    tex.LoadImage(Convert.FromBase64String(SceneUsers.users[i].profileimage));
+                    tex.LoadImage(Convert.FromBase64String(SceneUsers.users[i].Profileimage));
                     GameObject tmp_Item = Instantiate(itemOrange, itemParent.transform);
-                    tmp_Item.name = SceneUsers.users[i].id.ToString();
-                    tmp_Item.transform.GetChild(2).GetComponent<Text>().text = SceneUsers.users[i].id.ToString();
-                    tmp_Item.transform.GetChild(3).GetComponent<Text>().text = SceneUsers.users[i].name.ToString();
-                    tmp_Item.transform.GetChild(5).GetComponent<Text>().text = SceneUsers.users[i].gender.ToString();
-                    tmp_Item.transform.GetChild(7).GetComponent<Text>().text = DateTime.Parse(SceneUsers.users[i].dob).ToShortDateString();
-                    tmp_Item.transform.GetChild(9).GetComponent<Text>().text = SceneUsers.users[i].ethnicity.ToString();
+                    tmp_Item.name = SceneUsers.users[i].Id.ToString();
+                    tmp_Item.transform.GetChild(2).GetComponent<Text>().text = SceneUsers.users[i].Id.ToString();
+                    tmp_Item.transform.GetChild(3).GetComponent<Text>().text = SceneUsers.users[i].Name.ToString();
+                    tmp_Item.transform.GetChild(5).GetComponent<Text>().text = SceneUsers.users[i].Gender.ToString();
+                    tmp_Item.transform.GetChild(7).GetComponent<Text>().text = DateTime.Parse(SceneUsers.users[i].Dob).ToShortDateString();
+                    tmp_Item.transform.GetChild(9).GetComponent<Text>().text = SceneUsers.users[i].Ethnicity.ToString();
 
                     tmp_Item.transform.GetChild(10).GetChild(0).GetComponent<RawImage>().texture = tex;
                     //tmp_Item.transform.GetChild(4).GetChild(0).GetComponent<RawImage>().GetComponent<RectTransform>().sizeDelta = new Vector2(2000, 2000);
@@ -242,19 +242,19 @@ public class crud : MonoBehaviour
         User user = null;
         foreach (User u in SceneUsers.users)
         {
-            if (u.id.ToString() == obj_edit.name)
+            if (u.Id.ToString() == obj_edit.name)
             {
                 user = u;
                 break;
             }
         }
-        form_edit.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<InputField>().text = user.name;
-        form_edit.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<InputField>().text = user.age;
-        form_edit.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<InputField>().text = user.dob;
-        form_edit.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<InputField>().text = user.ethnicity;
-        form_edit.transform.GetChild(0).GetChild(0).GetChild(4).GetComponent<InputField>().text = user.gender;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<InputField>().text = user.Name;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<InputField>().text = user.Age;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<InputField>().text = user.Dob;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<InputField>().text = user.Ethnicity;
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(4).GetComponent<InputField>().text = user.Gender;
         form_edit.transform.GetChild(0).GetChild(0).GetChild(5).GetComponent<InputField>().text = string.Empty;
-        form_edit.transform.GetChild(0).GetChild(0).GetChild(8).GetComponent<Text>().text = user.id.ToString();
+        form_edit.transform.GetChild(0).GetChild(0).GetChild(8).GetComponent<Text>().text = user.Id.ToString();
 
     }
 
@@ -276,13 +276,13 @@ public class crud : MonoBehaviour
 
         User u = new User()
         {
-            id = int.Parse(form_edit.transform.GetChild(0).GetChild(0).GetChild(8).GetComponent<Text>().text),
-            name = form_edit.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<InputField>().text,
-            age = form_edit.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<InputField>().text,
-            dob = form_edit.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<InputField>().text,
-            ethnicity = form_edit.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<InputField>().text,
-            gender = form_edit.transform.GetChild(0).GetChild(0).GetChild(4).GetComponent<InputField>().text,
-            profileimage = Convert.ToBase64String(imageData)
+            Id = int.Parse(form_edit.transform.GetChild(0).GetChild(0).GetChild(8).GetComponent<Text>().text),
+            Name = form_edit.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<InputField>().text,
+            Age = form_edit.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<InputField>().text,
+            Dob = form_edit.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<InputField>().text,
+            Ethnicity = form_edit.transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<InputField>().text,
+            Gender = form_edit.transform.GetChild(0).GetChild(0).GetChild(4).GetComponent<InputField>().text,
+            Profileimage = Convert.ToBase64String(imageData)
         };
         StartCoroutine(UpdateUser(u));
 

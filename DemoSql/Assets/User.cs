@@ -8,29 +8,29 @@ using UnityEngine;
 public class User
 {
     [DataMember]
-    public int id;
+    public int Id;
 
     //[DataMember]
     //public int patientid;
 
     [DataMember]
 
-    public string name;
+    public string Name;
     [DataMember]
 
-    public string age;
+    public string Age;
 
     [DataMember]
-    public string dob;
+    public string Dob;
 
     [DataMember]
-    public string ethnicity;
+    public string Ethnicity;
 
     [DataMember]
-    public string gender;
+    public string Gender;
 
     [DataMember]
-    public string profileimage;
+    public string Profileimage;
 }
 [Serializable]
 public class GetResponseModel

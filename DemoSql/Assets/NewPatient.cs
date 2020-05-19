@@ -35,7 +35,7 @@ public class NewPatient : MonoBehaviour
 
 
 
-        UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:52324/User/AddUser", "POST");
+        UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:50471/Users/AddUser", "POST");
         unityWebRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
         unityWebRequest.SetRequestHeader("Content-Type", "application/json");
         unityWebRequest.SetRequestHeader("Accept", "text/csv");
@@ -68,13 +68,13 @@ public class NewPatient : MonoBehaviour
         User newUser = new User()
         {
             //id = Guid.NewGuid(),
-            name = form_create.transform.GetChild(0).GetComponent<InputField>().text,
-            age = form_create.transform.GetChild(1).GetComponent<InputField>().text,
-            dob = DateTime.Parse(form_create.transform.GetChild(2).GetComponent<InputField>().text).ToShortDateString(),
-            ethnicity = form_create.transform.GetChild(3).GetComponent<InputField>().text,
-            gender = form_create.transform.GetChild(4).GetComponent<InputField>().text
+            Name = form_create.transform.GetChild(0).GetComponent<InputField>().text,
+            Age = form_create.transform.GetChild(1).GetComponent<InputField>().text,
+            Dob= DateTime.Parse(form_create.transform.GetChild(2).GetComponent<InputField>().text).ToShortDateString(),
+            Ethnicity = form_create.transform.GetChild(3).GetComponent<InputField>().text,
+            Gender = form_create.transform.GetChild(4).GetComponent<InputField>().text
             ,
-            profileimage = Convert.ToBase64String(imageData)
+            Profileimage = Convert.ToBase64String(imageData)
         };
         //call api for user creation 
 
