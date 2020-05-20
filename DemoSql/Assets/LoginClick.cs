@@ -25,7 +25,7 @@ public class LoginClick : MonoBehaviour
     {
         SessionObject.LoggedInUserName = string.Empty;
         SessionObject.SessionPatientID = string.Empty;
-        SessionObject.user = null;
+        SessionObject.userVisit = null;
     }
     public void logincall()
     {
@@ -64,7 +64,7 @@ public class LoginClick : MonoBehaviour
 
         byte[] byteData = System.Text.Encoding.ASCII.GetBytes(json.ToCharArray());
 
-        UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:50471/Auth", "POST");
+        UnityWebRequest unityWebRequest = new UnityWebRequest("http://localhost:50471/Auth/Login", "POST");
         unityWebRequest.uploadHandler = new UploadHandlerRaw(byteData);
         unityWebRequest.SetRequestHeader("Content-Type", "application/json");
         DownloadHandlerBuffer downloadHandlerBuffer = new DownloadHandlerBuffer();

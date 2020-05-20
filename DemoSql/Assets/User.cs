@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -8,7 +9,10 @@ using UnityEngine;
 public class User
 {
     [DataMember]
-    public int Id;
+    public int UserId;
+
+    [DataMember]
+    public Guid Id;
 
     //[DataMember]
     //public int patientid;
@@ -33,7 +37,13 @@ public class User
     public string Profileimage;
 }
 [Serializable]
-public class GetResponseModel
+public class GetUsersResponseModel
 {
     public List<User> users;
 }
+
+//[Serializable]
+//public class VisitRequestModel
+//{
+   // public UserVisitRequest visit;
+//}
