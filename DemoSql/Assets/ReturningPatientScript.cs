@@ -8,7 +8,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-
+using System.Linq;
 public class ReturningPatientScript : MonoBehaviour
 {
 
@@ -62,6 +62,27 @@ public class ReturningPatientScript : MonoBehaviour
         form_patient.transform.GetChild(15).GetComponent<InputField>().text = currentUser.Name;
         form_patient.transform.GetChild(18).GetComponent<InputField>().text = DateTime.Parse(currentUser.Dob).ToShortDateString();
         form_patient.transform.GetChild(20).GetComponent<InputField>().text = currentUser.Ethnicity;
+        form_patient.transform.GetChild(22).GetComponent<Toggle>().isOn = false;
+        form_patient.transform.GetChild(23).GetComponent<Toggle>().isOn = false;
+        form_patient.transform.GetChild(24).GetComponent<Toggle>().isOn = false;
+        switch (currentUser.Gender)
+        {
+            case "Male":
+                form_patient.transform.GetChild(22).GetComponent<Toggle>().isOn = true;
+                
+                break;
+            case "Female":
+                form_patient.transform.GetChild(23).GetComponent<Toggle>().isOn = true;
+
+                break;
+            case "Other":
+                form_patient.transform.GetChild(24).GetComponent<Toggle>().isOn = true;
+
+                break;
+            default:
+                Debug.Log("");
+                break;
+        }
 
 
     }
@@ -73,7 +94,14 @@ public class ReturningPatientScript : MonoBehaviour
         user.Date = form_patient.transform.GetChild(9).GetComponent<InputField>().text;
         user.Dob = form_patient.transform.GetChild(18).GetComponent<InputField>().text;
         user.Ethnicity = form_patient.transform.GetChild(20).GetComponent<InputField>().text;
-        user.Gender = "-";//form_patient.transform.GetChild(18).GetComponent<InputField>().text;
+        var Genders = form_patient.transform.GetChild(25).GetComponent<ToggleGroup>(); ;
+
+        var selectedGender = Genders.ActiveToggles().FirstOrDefault();
+        if(selectedGender != null)
+        {
+            user.Gender = selectedGender.name;
+        }
+
         user.Name = form_patient.transform.GetChild(15).GetComponent<InputField>().text;
         user.PracticeLocation = form_patient.transform.GetChild(5).GetComponent<InputField>().text;
         user.PracticeName = form_patient.transform.GetChild(3).GetComponent<InputField>().text;

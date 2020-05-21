@@ -219,6 +219,8 @@ public class crud : MonoBehaviour
                     Ethnicity = uu.Ethnicity,
                     Gender = uu.Gender
                 };
+                updateUserGuid = uu.Id;
+                break;
             }
         }
 
