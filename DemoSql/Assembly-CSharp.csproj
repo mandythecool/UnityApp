@@ -75,6 +75,7 @@
     <Compile Include="Assets\UserVisitRequest.cs" />
     <Compile Include="Assets\Utilities\SimpleJSON.cs" />
     <Compile Include="Assets\Utilities\SimpleJSONUnity.cs" />
+    <Compile Include="Assets\Vitals.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/mandy/source/repos/UnityApp/UnityApp/DemoSql/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

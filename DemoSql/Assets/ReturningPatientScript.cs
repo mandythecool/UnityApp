@@ -9,6 +9,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.SceneManagement;
+
 public class ReturningPatientScript : MonoBehaviour
 {
 
@@ -143,7 +145,18 @@ public class ReturningPatientScript : MonoBehaviour
 
             string responsejson = unityWebRequest.downloadHandler.text;
 
+            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(responsejson)))
+            {
+                // Deserialization from JSON  
+                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(typeof(Guid));
+                Guid bsObj2 = (Guid)deserializer.ReadObject(ms);
+                SessionObject.userVisitID = bsObj2; 
+            }
+
+
             Debug.Log("Visit Created Success . . . ");
+
+            SceneManager.LoadScene("VitalsScene");
         }
     }
 
