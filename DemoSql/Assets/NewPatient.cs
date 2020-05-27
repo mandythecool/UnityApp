@@ -67,7 +67,7 @@ public class NewPatient : MonoBehaviour
     {
         User newUser = new User()
         {
-            //id = Guid.NewGuid(),
+            Id = Guid.NewGuid(),
             Name = form_create.transform.GetChild(0).GetComponent<InputField>().text,
             Age = form_create.transform.GetChild(1).GetComponent<InputField>().text,
             Dob= DateTime.Parse(form_create.transform.GetChild(2).GetComponent<InputField>().text).ToShortDateString(),

@@ -68,6 +68,7 @@
      <Compile Include="Assets\UserVisitRequest.cs" />
      <Compile Include="Assets\Utilities\SimpleJSON.cs" />
      <Compile Include="Assets\Utilities\SimpleJSONUnity.cs" />
+     <Compile Include="Assets\Vitals.cs" />
      <Compile Include="Assets\crud.cs" />
  <Reference Include="UnityEngine">
  <HintPath>D:/Unity/2019.3.13f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
