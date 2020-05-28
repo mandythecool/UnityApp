@@ -95,7 +95,7 @@ public class crud : MonoBehaviour
             Debug.Log("GetUsers API Success : Status Code: " + unityWebRequest.responseCode);
 
             string responsejson = unityWebRequest.downloadHandler.text;
-
+            form_edit.SetActive(false);
             ReadUsers();
         }
     }
@@ -118,7 +118,7 @@ public class crud : MonoBehaviour
             string age = SceneUsers.users[i].UserId.ToString();
             if (id != "")
             {
-                if (string.IsNullOrEmpty(SceneUsers.users[i].Age)) 
+                if (string.IsNullOrEmpty(SceneUsers.users[i].Age))
                     SceneUsers.users[i].Age = "0";
                 if (int.Parse(SceneUsers.users[i].Age) > 18)
                 {
@@ -152,7 +152,7 @@ public class crud : MonoBehaviour
                     if (!string.IsNullOrEmpty(SceneUsers.users[i].Profileimage))
                     {
                         tex.LoadImage(Convert.FromBase64String(SceneUsers.users[i].Profileimage));
-                        
+
                         tmp_Item.transform.GetChild(10).GetChild(0).GetComponent<RawImage>().texture = tex;
                     }
                     //tmp_Item.transform.GetChild(4).GetChild(0).GetComponent<RawImage>().GetComponent<RectTransform>().sizeDelta = new Vector2(2000, 2000);
@@ -179,6 +179,7 @@ public class crud : MonoBehaviour
             {
                 user = u;
                 updateUserGuid = u.Id;
+                SessionObject.SessionPatientID_Guid = u.Id;
                 break;
             }
         }
@@ -236,7 +237,7 @@ public class crud : MonoBehaviour
 
         User u = new User()
         {
-            UserId = int.Parse(form_edit.transform.GetChild(0).GetChild(0).GetChild(8).GetComponent<Text>().text),
+            Id = SessionObject.SessionPatientID_Guid,
             Name = form_edit.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<InputField>().text,
             Age = form_edit.transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<InputField>().text,
             Dob = form_edit.transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<InputField>().text,
@@ -263,12 +264,19 @@ public class crud : MonoBehaviour
 
     public void UploadImage()
     {
-        string path = EditorUtility.OpenFilePanel("Upload Profile Image", "", "*");
+        SimpleFileBrowser.FileBrowser.ShowLoadDialog((path) => { ReadImageFile(path); }, null,
+     false, null, "Choose the Profile Image (png/jpg/bmp/tiff)", "Select");
+
+    }
+    public void ReadImageFile(string path)
+    {
+
         List<string> supportedTypes = new List<string>() { ".jpg", ".png", ".bmp" };
-        while (!supportedTypes.Contains(Path.GetExtension(path)))
+        if (!supportedTypes.Contains(Path.GetExtension(path)))
         {
-            path = EditorUtility.OpenFilePanel("Upload Profile Image", "", "*");
+            UploadImage();
         }
+        
 
         if (path.Length != 0)
         {

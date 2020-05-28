@@ -98,13 +98,20 @@ public class NewPatient : MonoBehaviour
 
     public void UploadImage()
     {
-        string path = EditorUtility.OpenFilePanel("Upload Profile Image", "", "*");
-        List<string> supportedTypes = new List<string>() { ".jpg", ".png", ".bmp" };
-        while (!supportedTypes.Contains(Path.GetExtension(path)))
-        {
-            path = EditorUtility.OpenFilePanel("Upload Profile Image", "", "*");
-        }
+        SimpleFileBrowser.FileBrowser.ShowLoadDialog((path) => { ReadImageFile(path); }, null,
+        false, null, "Choose the Profile Image (png/jpg/bmp/tiff)", "Select");
+    }
 
+    public void ReadImageFile(string path)
+    {
+
+        //string path = EditorUtility.OpenFilePanel("Upload Profile Image", "", "*");
+        List<string> supportedTypes = new List<string>() { ".jpg", ".png", ".bmp" };
+        if (!supportedTypes.Contains(Path.GetExtension(path)))
+        {
+            UploadImage();
+        }
+        
         if (path.Length != 0)
         {
             form_create.transform.GetChild(5).GetComponent<InputField>().text = path.ToString();

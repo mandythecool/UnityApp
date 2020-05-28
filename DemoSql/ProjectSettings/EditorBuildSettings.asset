@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/VitalsScene.unity
     guid: 61f89985a7b371a43a718b8fe68d47d5
+  - enabled: 1
+    path: Assets/Scenes/QuestionTwoScene.unity
+    guid: f6ab46502f9b7d540bc13f8f3b1f8392
   m_configObjects: {}
